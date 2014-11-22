@@ -2,8 +2,10 @@ package com.example.andreas.sunshine;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -32,6 +33,12 @@ public class ForecastFragment extends Fragment
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
@@ -46,9 +53,7 @@ public class ForecastFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menu_action_refresh)
         {
-            WeatherConfiguration config = new WeatherConfiguration();
-            config.NumberOfDays = 10;
-            new FetchWeatherTask().execute(config);
+            updateWeather();
             return true;
         }
 
@@ -70,14 +75,28 @@ public class ForecastFragment extends Fragment
                 startActivity(detailActivity);
             }
         });
-        ArrayList<String> list = new ArrayList<String>();
-        forecastAdapter = new ArrayAdapter<String>(rootView.getContext(),R.layout.listview_item_forecast,R.id.textView_item_listView_forecast);
-        forecastListView.setAdapter(forecastAdapter);
 
-        new FetchWeatherTask().execute(new WeatherConfiguration());
+        forecastAdapter = new ArrayAdapter<String>(rootView.getContext(),R.layout.listview_item_forecast,R.id.textView_item_listView_forecast,new ArrayList<String>());
+        forecastListView.setAdapter(forecastAdapter);
 
         return rootView;
     }
+
+    private void updateWeather()
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location = preferences.getString(getString(R.string.pref_location_key),getString(R.string.pref_location_default));
+        String unitStr = preferences.getString(getString(R.string.pref_unit_key), getString(R.string.pref_unit_default));
+        Unit unit = Unit.values()[Integer.parseInt(unitStr)];
+
+        WeatherConfiguration config = new WeatherConfiguration();
+        config.NumberOfDays = 10;
+        config.SearchString = location;
+        config.TemperatureUnit = unit;
+
+        new FetchWeatherTask().execute(config);
+    }
+
 
     private class FetchWeatherTask extends AsyncTask<WeatherConfiguration,Void,String[]>
     {
@@ -94,7 +113,13 @@ public class ForecastFragment extends Fragment
             WeatherDataParser parser = new WeatherDataParser();
             try
             {
-                return parser.getWeatherDataFromJson(response,jsonRequest.getCount());
+                TemperatureResult[] results = parser.getWeatherDataFromJson(response,jsonRequest.getCount());
+                String[] list = new String[results.length];
+                for(int i=0;i<results.length;i++)
+                {
+                    list[i] = results[i].toString(config.TemperatureUnit);
+                }
+                return list;
             }
             catch(JSONException e)
             {
@@ -124,5 +149,6 @@ public class ForecastFragment extends Fragment
     {
         public int NumberOfDays=7;
         public String SearchString= DEFAULT_SEARCH_STRING;
+        public Unit TemperatureUnit = Unit.Metric;
     }
 }

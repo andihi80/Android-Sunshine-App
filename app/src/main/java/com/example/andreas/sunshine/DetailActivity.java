@@ -1,26 +1,28 @@
 package com.example.andreas.sunshine;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.TextView;
 
 
 public class DetailActivity extends Activity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        if( savedInstanceState == null ) {
+        if( savedInstanceState == null )
+        {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new DetailFragment())
                     .commit();
         }
     }
@@ -42,6 +44,7 @@ public class DetailActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if( id == R.id.action_settings ) {
+            startActivity(new Intent(this,SettingsActivity.class));
             return true;
         }
 
@@ -51,15 +54,20 @@ public class DetailActivity extends Activity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class DetailFragment extends Fragment {
 
-        public PlaceholderFragment() {
+        public DetailFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+
+            Intent  intent = getActivity().getIntent();
+            String text = intent.getStringExtra(Intent.EXTRA_TEXT);
+            ((TextView)rootView.findViewById(R.id.textView_fragment_detail)).setText(text);
+
             return rootView;
         }
     }
