@@ -43,7 +43,7 @@ public class JsonRequest {
                     .appendPath("2.5")
                     .appendPath("forecast")
                     .appendPath("daily")
-                    .appendQueryParameter("id", _searchString)
+                    .appendQueryParameter("q", _searchString)
                     .appendQueryParameter("mode","json")
                     .appendQueryParameter("units","metric")
                     .appendQueryParameter("cnt", String.valueOf(_count));
