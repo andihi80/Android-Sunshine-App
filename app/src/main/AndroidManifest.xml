@@ -18,6 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.example.andreas.sunshine.DetailActivity"
+            android:label="@string/title_activity_detail"
+            android:parentActivityName="com.example.andreas.sunshine.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.andreas.sunshine.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

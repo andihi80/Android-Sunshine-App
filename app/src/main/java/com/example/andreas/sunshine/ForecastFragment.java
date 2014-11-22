@@ -1,6 +1,7 @@
 package com.example.andreas.sunshine;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -63,7 +64,10 @@ public class ForecastFragment extends Fragment
         forecastListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), "Clicked on item: " + forecastAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Clicked on item: " + forecastAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                Intent detailActivity = new Intent(getActivity(),DetailActivity.class);
+                detailActivity.putExtra(Intent.EXTRA_TEXT,forecastAdapter.getItem(position));
+                startActivity(detailActivity);
             }
         });
         ArrayList<String> list = new ArrayList<String>();
