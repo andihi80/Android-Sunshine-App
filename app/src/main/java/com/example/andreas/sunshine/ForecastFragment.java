@@ -26,7 +26,6 @@ import java.util.ArrayList;
  */
 public class ForecastFragment extends Fragment
 {
-    private static final String DEFAULT_SEARCH_STRING ="7871855";//"94043";
     private ArrayAdapter<String> forecastAdapter = null;
 
     public ForecastFragment() {
@@ -148,7 +147,7 @@ public class ForecastFragment extends Fragment
     private class WeatherConfiguration
     {
         public int NumberOfDays=7;
-        public String SearchString= DEFAULT_SEARCH_STRING;
+        public String SearchString;
         public Unit TemperatureUnit = Unit.Metric;
     }
 }
