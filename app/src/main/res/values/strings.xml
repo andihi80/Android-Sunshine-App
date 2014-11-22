@@ -17,6 +17,7 @@
     <string name="pref_unit_default">0</string>
 
     <string name="action_map_title">Location</string>
+    <string name="action_share_label">Share</string>
 
 
 </resources>
