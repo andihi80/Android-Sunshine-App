@@ -109,6 +109,7 @@ public class ForecastFragment extends Fragment
             jsonRequest.setSearchString(config.SearchString);
             String response =  jsonRequest.Response();
 
+            Log.d(LOG_TAG,"response: "+response);
             WeatherDataParser parser = new WeatherDataParser();
             try
             {

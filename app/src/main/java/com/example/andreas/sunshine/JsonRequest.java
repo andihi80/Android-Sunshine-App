@@ -39,7 +39,7 @@ public class JsonRequest {
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("http")
                     .authority("api.openweathermap.org")
-                    .appendPath("data")
+                    .appendPath("com/example/andreas/sunshine/data")
                     .appendPath("2.5")
                     .appendPath("forecast")
                     .appendPath("daily")
