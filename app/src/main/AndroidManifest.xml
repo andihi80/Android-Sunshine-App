@@ -32,10 +32,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="MainActivity" />
-        </activity>
-        <provider
-            android:authorities="com.example.andreas.sunshine."
-            android:name=".data.WeatherProvider" />
+            </activity>
     </application>
 
 </manifest>

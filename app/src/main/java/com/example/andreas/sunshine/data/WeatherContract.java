@@ -31,7 +31,7 @@ public class WeatherContract {
     // relationship between a domain name and its website.  A convenient string to use for the
     // content authority is the package name for the app, which is guaranteed to be unique on the
     // device.
-    public static final String CONTENT_AUTHORITY = "com.example.andreas.sunshine.data";
+    public static final String CONTENT_AUTHORITY = "com.example.android.sunshine.app";
 
     // Use CONTENT_AUTHORITY to create the base of all URI's which apps will use to contact
     // the content provider.
@@ -115,10 +115,6 @@ public class WeatherContract {
         // map intent, we store the latitude and longitude as returned by openweathermap.
         public static final String COLUMN_COORD_LAT = "coord_lat";
         public static final String COLUMN_COORD_LONG = "coord_long";
-
-        public static Uri buildLocationUri(long id) {
-            return ContentUris.withAppendedId(CONTENT_URI, id);
-        }
     }
 /*
     /* Inner class that defines the table contents of the weather table */
